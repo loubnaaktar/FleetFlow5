@@ -4,6 +4,7 @@ import org.example.fleetflow.DTO.VehiculeDTO;
 import org.example.fleetflow.Repository.VehiculeRepository;
 import org.example.fleetflow.mapper.VehiculeMapper;
 import org.example.fleetflow.model.Vehicule;
+import org.example.fleetflow.service.implementations.VehiculeServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +27,7 @@ class VehiculeServiceTest {
     private VehiculeMapper vehiculeMapper;
 
     @InjectMocks
-    private VehiculeService vehiculeService;
+    private VehiculeServiceImpl vehiculeService;
 
     private Vehicule vehicule;
     private VehiculeDTO vehiculeDTO;

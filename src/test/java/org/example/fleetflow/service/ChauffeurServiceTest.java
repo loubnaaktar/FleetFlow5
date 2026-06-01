@@ -4,6 +4,7 @@ import org.example.fleetflow.DTO.ChauffeurDTO;
 import org.example.fleetflow.Repository.ChauffeurRepository;
 import org.example.fleetflow.mapper.ChauffeurMapper;
 import org.example.fleetflow.model.Chauffeur;
+import org.example.fleetflow.service.implementations.ChauffeurServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,7 +16,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ChauffeurServiceTest {
@@ -25,7 +25,7 @@ class ChauffeurServiceTest {
 @Mock
     ChauffeurMapper chauffeurMapper;
 @InjectMocks
-ChauffeurService chauffeurService;
+ChauffeurServiceImpl chauffeurService;
 @BeforeEach
 void initialisation(){
     Chauffeur chauffeur1 = new Chauffeur();

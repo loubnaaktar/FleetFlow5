@@ -1,9 +1,3 @@
-ALTER TABLE chauffeur
-    MODIFY disponible BOOLEAN DEFAULT TRUE;
-
-ALTER TABLE livraison
-    MODIFY statut ENUM('ENATTENTE','ENCOURS','LIVREE') DEFAULT 'ENATTENTE';
-
 ALTER TABLE vehicule
     ADD CONSTRAINT chk_capacite CHECK (capacite > 0);
 

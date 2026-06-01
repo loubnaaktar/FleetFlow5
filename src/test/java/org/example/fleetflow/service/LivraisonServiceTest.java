@@ -10,6 +10,7 @@ import org.example.fleetflow.model.Chauffeur;
 import org.example.fleetflow.model.Client;
 import org.example.fleetflow.model.Livraison;
 import org.example.fleetflow.model.Vehicule;
+import org.example.fleetflow.service.implementations.LivraisonServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -37,7 +38,7 @@ class LivraisonServiceTest {
     @Mock
     VehiculeRepository vehiculeRepository;
     @InjectMocks
-    LivraisonService livraisonService;
+    LivraisonServiceImpl livraisonService;
 
 
     @Test

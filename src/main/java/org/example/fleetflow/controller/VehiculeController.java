@@ -3,7 +3,7 @@ package org.example.fleetflow.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.fleetflow.DTO.VehiculeDTO;
-import org.example.fleetflow.service.VehiculeService;
+import org.example.fleetflow.service.implementations.VehiculeServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class VehiculeController {
 
-    private final VehiculeService service;
+    private final VehiculeServiceImpl service;
 
     @PostMapping
     public VehiculeDTO create(@Valid  @RequestBody VehiculeDTO dto) {

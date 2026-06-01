@@ -17,10 +17,8 @@ import java.util.List;
 @Getter
 @Setter
 
-public class Chauffeur {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Chauffeur extends Utilisateur{
+
     private String nom;
     private String telephone;
     private String permisType;

@@ -5,19 +5,15 @@ import org.example.fleetflow.Repository.ClientRepository;
 import org.example.fleetflow.Repository.LivraisonRepository;
 import org.example.fleetflow.mapper.ClientMapper;
 import org.example.fleetflow.model.Client;
+import org.example.fleetflow.service.implementations.ClientServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.parallel.Execution;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.internal.stubbing.answers.Returns;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Collections;
-
-import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class ClientServiceTest {
 
@@ -31,7 +27,7 @@ class ClientServiceTest {
     ClientMapper mapper;
 
     @InjectMocks
-    ClientService clientService;
+    ClientServiceImpl clientService;
 
     @Test
     void addClientTest() {

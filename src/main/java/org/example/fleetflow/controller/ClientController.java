@@ -2,8 +2,7 @@ package org.example.fleetflow.controller;
 
 import jakarta.validation.Valid;
 import org.example.fleetflow.DTO.ClientDTO;
-import org.example.fleetflow.model.Client;
-import org.example.fleetflow.service.ClientService;
+import org.example.fleetflow.service.implementations.ClientServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +12,7 @@ import java.util.List;
 @RequestMapping("/api/clients")
 public class ClientController {
     @Autowired
-    ClientService clientService;
+    ClientServiceImpl clientService;
     @PostMapping
     public void AjouterClient(@Valid @RequestBody ClientDTO client){
         clientService.addClient(client);

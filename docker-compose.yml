@@ -1,9 +1,8 @@
-version: "3.7"
 
 services:
   app:
     build: .
-    container_name: spring_boot_app
+    container_name: spring_boot_app_fleetflow
     depends_on:
       db:
         condition: service_healthy
@@ -18,7 +17,7 @@ services:
 
   db:
     image: mysql:8.0
-    container_name: mysql_db
+    container_name: mysql_db_fleetflow
     restart: always
     ports:
       - 3307:3306

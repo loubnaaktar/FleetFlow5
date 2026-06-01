@@ -3,9 +3,8 @@ package org.example.fleetflow.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.fleetflow.DTO.LivraisonDTO;
-import org.example.fleetflow.DTO.VehiculeDTO;
 import org.example.fleetflow.model.Livraison;
-import org.example.fleetflow.service.LivraisonService;
+import org.example.fleetflow.service.implementations.LivraisonServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LivraisonController {
 
-    private final LivraisonService livraisonService;
+    private final LivraisonServiceImpl livraisonService;
 
     @PostMapping
     public LivraisonDTO create(@Valid @RequestParam long idClient,@RequestBody LivraisonDTO dto) {

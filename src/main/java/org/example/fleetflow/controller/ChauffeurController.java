@@ -3,8 +3,7 @@ package org.example.fleetflow.controller;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.fleetflow.DTO.ChauffeurDTO;
-import org.example.fleetflow.model.Chauffeur;
-import org.example.fleetflow.service.ChauffeurService;
+import org.example.fleetflow.service.implementations.ChauffeurServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
 
 @AllArgsConstructor
 public class ChauffeurController {
-    private final ChauffeurService chauffeurService;
+    private final ChauffeurServiceImpl chauffeurService;
     @GetMapping
     public List<ChauffeurDTO> listChauffeuresDispo(){
         return chauffeurService.cheuffeursDisponibles();

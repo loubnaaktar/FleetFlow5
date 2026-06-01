@@ -19,7 +19,7 @@ CREATE TABLE chauffeur (
                            nom VARCHAR(100) NOT NULL,
                            telephone VARCHAR(20),
                            permis_type VARCHAR(50),
-                           disponible BOOLEAN
+                           disponible BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE livraison (
@@ -27,8 +27,8 @@ CREATE TABLE livraison (
                            date_livraison DATETIME,
                            adresse_depart VARCHAR(255) NOT NULL,
                            adresse_destination VARCHAR(255) NOT NULL,
-                           statut ENUM('ENATTENTE','ENCOURS','LIVREE') NOT NULL,
+                           statut ENUM('ENATTENTE','ENCOURS','LIVREE') DEFAULT 'ENATTENTE',
                            chauffeur_id BIGINT,
                            client_id BIGINT,
-                            vehicule_id BIGINT
+                           vehicule_id BIGINT
 );

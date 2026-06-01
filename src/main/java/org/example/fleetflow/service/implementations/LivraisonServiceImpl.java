@@ -1,4 +1,4 @@
-package org.example.fleetflow.service;
+package org.example.fleetflow.service.implementations;
 
 import lombok.AllArgsConstructor;
 import org.example.fleetflow.DTO.LivraisonDTO;
@@ -11,6 +11,7 @@ import org.example.fleetflow.model.Chauffeur;
 import org.example.fleetflow.model.Client;
 import org.example.fleetflow.model.Livraison;
 import org.example.fleetflow.model.Vehicule;
+import org.example.fleetflow.service.interfaces.LivraisonService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,13 +22,14 @@ import static org.example.fleetflow.model.Vehicule.StatutVehicule.EN_LIVRAISON;
 
 @Service
 @AllArgsConstructor
-public class LivraisonService {
+public class LivraisonServiceImpl implements LivraisonService {
     private final LivraisonRepository livraisonRepository;
     private final ClientRepository clientRepository;
     private final LivraisonMapper livraisonMapper;
     private final ChauffeurRepository chauffeurRepository;
     private final VehiculeRepository vehiculeRepository;
 
+    @Override
 public LivraisonDTO ajouterLivraison(long idClient,LivraisonDTO dto){
 Client client = clientRepository.findById(idClient).orElseThrow(() -> new RuntimeException("Client not found"));
 Livraison livraison = new Livraison();
@@ -39,7 +41,7 @@ livraison.setStatut(Livraison.StatutLivraison.ENATTENTE);
 return livraisonMapper.toDTO(livraisonRepository.save(livraison));
 }
 
-
+@Override
 public LivraisonDTO assignerChauffeurVehicule(long idLivraison, long idChauffeur, long idVehicule){
 Livraison livraison = livraisonRepository.findById(idLivraison).orElseThrow(() ->new RuntimeException("Livraison introuvable"));
 Chauffeur chauffeur = chauffeurRepository.findById(idChauffeur).orElseThrow(()-> new RuntimeException("chauffeur introuvable"));
@@ -61,11 +63,13 @@ Livraison liv = livraisonRepository.save(livraison);
 return livraisonMapper.toDTO(liv);
 }
 
+@Override
 public List<LivraisonDTO> listLivraisons(){
 List<Livraison> listLivraisons = livraisonRepository.findAll();
 return livraisonMapper.toDTO(listLivraisons);
 }
 
+@Override
 public LivraisonDTO modifierStatutLivraison(long idLivraison, Livraison.StatutLivraison statut){
     Livraison livraison = livraisonRepository.findById(idLivraison).orElseThrow(() ->new RuntimeException("Livraison introuvable"));
     livraison.setStatut(statut);
