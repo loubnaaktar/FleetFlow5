@@ -12,10 +12,11 @@ import org.example.fleetflow.model.Client;
 import org.example.fleetflow.model.Livraison;
 import org.example.fleetflow.model.Vehicule;
 import org.example.fleetflow.service.interfaces.LivraisonService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.example.fleetflow.model.Vehicule.StatutVehicule.DISPONIBLE;
 import static org.example.fleetflow.model.Vehicule.StatutVehicule.EN_LIVRAISON;
@@ -64,9 +65,9 @@ return livraisonMapper.toDTO(liv);
 }
 
 @Override
-public List<LivraisonDTO> listLivraisons(){
-List<Livraison> listLivraisons = livraisonRepository.findAll();
-return livraisonMapper.toDTO(listLivraisons);
+public Page<LivraisonDTO> listLivraisons(Pageable pageable){
+Page<Livraison> pageLivraisons = livraisonRepository.findAll(pageable);
+return pageLivraisons.map(livraisonMapper::toDTO);
 }
 
 @Override

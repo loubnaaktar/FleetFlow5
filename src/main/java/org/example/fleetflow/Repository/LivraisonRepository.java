@@ -1,6 +1,8 @@
 package org.example.fleetflow.Repository;
 
 import org.example.fleetflow.model.Livraison;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -10,8 +12,8 @@ import java.util.List;
 
 @Repository
 public interface LivraisonRepository extends JpaRepository<Livraison, Long> {
-    List<Livraison> findByStatut(Livraison.StatutLivraison statut);
-   List<Livraison> findByClientId(Long id);
+    Page<Livraison> findByStatut(Livraison.StatutLivraison statut, Pageable pageable);
+   Page<Livraison> findByClientId(Long id,Pageable pageable);
 
 
    @Query("select l from Livraison l where l.dateLivraison BETWEEN :date1 AND :date2")
@@ -19,4 +21,5 @@ public interface LivraisonRepository extends JpaRepository<Livraison, Long> {
    @Query("select l from Livraison l where l.adresseDestination = :ville")
    List<Livraison> findLivraisonByVille(String ville);
 
+   Page<Livraison> findAll(java.awt.print.Pageable pageable);
 }

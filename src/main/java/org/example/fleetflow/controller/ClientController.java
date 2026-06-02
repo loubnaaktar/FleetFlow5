@@ -4,6 +4,10 @@ import jakarta.validation.Valid;
 import org.example.fleetflow.DTO.ClientDTO;
 import org.example.fleetflow.service.implementations.ClientServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +22,9 @@ public class ClientController {
         clientService.addClient(client);
     }
     @GetMapping
-    public List<ClientDTO> AfficherClients(){
-        return clientService.getAllClients();
+    public Page<ClientDTO> AfficherClients(@PageableDefault(sort = "nom",
+    direction = Sort.Direction.ASC) Pageable pageable){
+        return clientService.getAllClients(pageable);
     }
     @PutMapping("/{id}")
     public void ModifierClient(@Valid @PathVariable Long id,ClientDTO clientDTO){

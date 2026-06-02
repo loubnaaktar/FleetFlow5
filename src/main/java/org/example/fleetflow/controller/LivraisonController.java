@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.example.fleetflow.DTO.LivraisonDTO;
 import org.example.fleetflow.model.Livraison;
 import org.example.fleetflow.service.implementations.LivraisonServiceImpl;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,8 +33,8 @@ public class LivraisonController {
     }
 
     @GetMapping
-    public List<LivraisonDTO> getAll(){
-        return livraisonService.listLivraisons();
+    public Page<LivraisonDTO> getAll(@ Pageable pageable){
+        return livraisonService.listLivraisons(pageable);
     }
 
     @PutMapping("/{id}/statut")

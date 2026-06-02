@@ -4,6 +4,10 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.fleetflow.DTO.ChauffeurDTO;
 import org.example.fleetflow.service.implementations.ChauffeurServiceImpl;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,8 +19,9 @@ import java.util.List;
 public class ChauffeurController {
     private final ChauffeurServiceImpl chauffeurService;
     @GetMapping
-    public List<ChauffeurDTO> listChauffeuresDispo(){
-        return chauffeurService.cheuffeursDisponibles();
+    public Page<ChauffeurDTO> listChauffeuresDispo(@PageableDefault(sort = "nom",
+    direction = Sort.Direction.ASC) Pageable pageable){
+        return chauffeurService.cheuffeursDisponibles(pageable);
     }
 
     @PostMapping("/ajouter")

@@ -6,6 +6,8 @@ import org.example.fleetflow.Repository.LivraisonRepository;
 import org.example.fleetflow.mapper.ClientMapper;
 import org.example.fleetflow.model.Client;
 import org.example.fleetflow.service.interfaces.ClientService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,9 +32,9 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<ClientDTO> getAllClients() {
-
-        return clientRepository.findAll().stream().map(mapper::toDTO).toList();
+    public Page<ClientDTO> getAllClients(Pageable pageable) {
+Page<Client> clientPage = clientRepository.findAll(pageable);
+        return clientPage.map(mapper::toDTO);
     }
 
 

@@ -4,6 +4,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.fleetflow.DTO.VehiculeDTO;
 import org.example.fleetflow.service.implementations.VehiculeServiceImpl;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +23,8 @@ public class VehiculeController {
     }
 
     @GetMapping
-    public List<VehiculeDTO> getAll() {
-        return service.getAll();
+    public Page<VehiculeDTO> getAll(Pageable pageable) {
+        return service.getAll(pageable);
     }
 
     @GetMapping("/{id}")

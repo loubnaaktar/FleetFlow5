@@ -6,7 +6,10 @@ import org.example.fleetflow.Repository.VehiculeRepository;
 import org.example.fleetflow.mapper.VehiculeMapper;
 import org.example.fleetflow.model.Vehicule;
 import org.example.fleetflow.service.interfaces.VehiculeService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
+import tools.jackson.databind.cfg.MapperBuilder;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +19,7 @@ import java.util.stream.Collectors;
 public class VehiculeServiceImpl implements VehiculeService {
     private final VehiculeRepository vehiculeRepository;
     private final VehiculeMapper vehiculeMapper;
+    private final MapperBuilder mapperBuilder;
 
     @Override
     public VehiculeDTO createVehicule(VehiculeDTO dto) {
@@ -25,15 +29,16 @@ public class VehiculeServiceImpl implements VehiculeService {
     }
 
     @Override
-    public List<VehiculeDTO> getVehiculesDisponible() {
-        return vehiculeRepository.findByStatut(Vehicule.StatutVehicule.DISPONIBLE)
-                .stream().map(vehiculeMapper::toDto).collect(Collectors.toList());
+    public Page<VehiculeDTO> getVehiculesDisponible(Pageable pageable) {
+       Page<Vehicule> vehiculePage =  vehiculeRepository.findByStatut(Vehicule.StatutVehicule.DISPONIBLE,pageable);
+       return vehiculePage.map(vehiculeMapper::toDto);
+
     }
 
     @Override
-    public List<VehiculeDTO> getAll() {
-        return vehiculeRepository.findAll().stream().map(vehiculeMapper::toDto)
-                .collect(Collectors.toList());
+    public Page<VehiculeDTO> getAll(Pageable pageable) {
+       Page<Vehicule> vehiculePage =  vehiculeRepository.findAll(pageable);
+              return vehiculePage.map(vehiculeMapper::toDto);
     }
 
     public VehiculeDTO getById(Long id) {
@@ -57,9 +62,9 @@ public class VehiculeServiceImpl implements VehiculeService {
     }
 
     @Override
-    public List<VehiculeDTO> getVehiculeByCapacite(Integer capacite){
-        return vehiculeRepository.findByCapaciteGreaterThan(capacite).stream()
-                .map(vehicule -> vehiculeMapper.toDto(vehicule)).toList();
+    public Page<VehiculeDTO> getVehiculeByCapacite(Integer capacite,Pageable pageable){
+      Page<Vehicule> vehiculePage =  vehiculeRepository.findByCapaciteGreaterThan(capacite,pageable);
+      return vehiculePage.map(vehiculeMapper::toDto);
     }
 
 }

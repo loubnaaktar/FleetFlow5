@@ -6,7 +6,9 @@ import org.example.fleetflow.Repository.ChauffeurRepository;
 import org.example.fleetflow.mapper.ChauffeurMapper;
 import org.example.fleetflow.model.Chauffeur;
 import org.example.fleetflow.service.interfaces.ChauffeurService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -40,9 +42,9 @@ public Chauffeur chercherChauffeurParId(long idChauffeur){
 }
 
 @Override
-public List<ChauffeurDTO> cheuffeursDisponibles(){
-    List<Chauffeur> listDsipo = chauffeurRepository.findByDisponible(true);
-    return mapper.toDTO(listDsipo);
+public Page<ChauffeurDTO> cheuffeursDisponibles(Pageable pageable){
+    Page<Chauffeur> listDsipo = chauffeurRepository.findByDisponible(true,pageable);
+    return listDsipo.map(mapper::toDTO);
 }
 
 @Override
