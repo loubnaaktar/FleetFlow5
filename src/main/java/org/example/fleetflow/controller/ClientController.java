@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,19 +18,24 @@ import java.util.List;
 public class ClientController {
     @Autowired
     ClientServiceImpl clientService;
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @PostMapping
     public void AjouterClient(@Valid @RequestBody ClientDTO client){
         clientService.addClient(client);
     }
+
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @GetMapping
     public Page<ClientDTO> AfficherClients(@PageableDefault(sort = "nom",
     direction = Sort.Direction.ASC) Pageable pageable){
         return clientService.getAllClients(pageable);
     }
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @PutMapping("/{id}")
     public void ModifierClient(@Valid @PathVariable Long id,ClientDTO clientDTO){
         clientService.Modifierclient(id,clientDTO);
     }
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @DeleteMapping("/{id}")
     public void DeleteClient(@PathVariable Long id){
         clientService.deleteClient(id);

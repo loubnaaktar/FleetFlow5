@@ -2,21 +2,16 @@ package org.example.fleetflow.service.implementations;
 
 import lombok.AllArgsConstructor;
 import org.example.fleetflow.DTO.LivraisonDTO;
-import org.example.fleetflow.Repository.ChauffeurRepository;
-import org.example.fleetflow.Repository.ClientRepository;
-import org.example.fleetflow.Repository.LivraisonRepository;
-import org.example.fleetflow.Repository.VehiculeRepository;
+import org.example.fleetflow.Repository.*;
 import org.example.fleetflow.mapper.LivraisonMapper;
-import org.example.fleetflow.model.Chauffeur;
-import org.example.fleetflow.model.Client;
-import org.example.fleetflow.model.Livraison;
-import org.example.fleetflow.model.Vehicule;
+import org.example.fleetflow.model.*;
 import org.example.fleetflow.service.interfaces.LivraisonService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static org.example.fleetflow.model.Vehicule.StatutVehicule.DISPONIBLE;
 import static org.example.fleetflow.model.Vehicule.StatutVehicule.EN_LIVRAISON;
@@ -29,6 +24,7 @@ public class LivraisonServiceImpl implements LivraisonService {
     private final LivraisonMapper livraisonMapper;
     private final ChauffeurRepository chauffeurRepository;
     private final VehiculeRepository vehiculeRepository;
+    private final UtilisateurRepository userrepo;
 
     @Override
 public LivraisonDTO ajouterLivraison(long idClient,LivraisonDTO dto){
@@ -78,4 +74,13 @@ public LivraisonDTO modifierStatutLivraison(long idLivraison, Livraison.StatutLi
     return livraisonMapper.toDTO(liv);
 }
 
+//public Page<LivraisonDTO> livraisonsChauffeur(Long id,Pageable pageable){
+//
+//    Utilisateur user = userrepo.findById(id).orElseThrow(()->new RuntimeException("ve ne puvez pas consultez"));
+//    if(user.getRole() == Utilisateur.Role.CHAUFFEUR){
+//        Page<Livraison> livraisonsPage = livraisonRepository.findLivraisonsByChauffeur_Id(id,pageable);
+//        return livraisonsPage.map(livraisonMapper::toDTO);
+//    }
+//return null;
+//}
 }

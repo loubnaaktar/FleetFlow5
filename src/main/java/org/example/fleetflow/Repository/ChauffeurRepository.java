@@ -15,4 +15,5 @@ public interface ChauffeurRepository extends JpaRepository<Chauffeur, Long> {
 
     Page<Chauffeur> findByDisponible(boolean disponible, Pageable pageable);
 
+
 }

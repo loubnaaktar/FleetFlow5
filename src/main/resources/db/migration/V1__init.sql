@@ -15,7 +15,7 @@ CREATE TABLE client (
 );
 
 CREATE TABLE chauffeur (
-                           id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                           id BIGINT PRIMARY KEY,
                            nom VARCHAR(100) NOT NULL,
                            telephone VARCHAR(20),
                            permis_type VARCHAR(50),
