@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.example.fleetflow.DTO.LivraisonDTO;
 import org.example.fleetflow.model.Livraison;
 import org.example.fleetflow.service.implementations.LivraisonServiceImpl;
+import org.example.fleetflow.model.Utilisateur;
+import org.springframework.security.core.Authentication;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -36,9 +38,15 @@ public class LivraisonController {
         return livraisonService.assignerChauffeurVehicule(id,idChauffeur,idVehicule);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','CHAUFFEUR')")
     @GetMapping
-    public Page<LivraisonDTO> getAll(@PageableDefault  Pageable pageable){
+    public Page<LivraisonDTO> getAll(@PageableDefault Pageable pageable, Authentication authentication){
+        Utilisateur user = (Utilisateur) authentication.getPrincipal();
+        
+        if (user.getRole() == Utilisateur.Role.CHAUFFEUR) {
+            return livraisonService.getLivraisonsParChauffeur(user.getId(), pageable);
+        }
+        
         return livraisonService.listLivraisons(pageable);
     }
 

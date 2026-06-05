@@ -66,21 +66,17 @@ Page<Livraison> pageLivraisons = livraisonRepository.findAll(pageable);
 return pageLivraisons.map(livraisonMapper::toDTO);
 }
 
-@Override
-public LivraisonDTO modifierStatutLivraison(long idLivraison, Livraison.StatutLivraison statut){
-    Livraison livraison = livraisonRepository.findById(idLivraison).orElseThrow(() ->new RuntimeException("Livraison introuvable"));
-    livraison.setStatut(statut);
-    Livraison liv = livraisonRepository.save(livraison);
-    return livraisonMapper.toDTO(liv);
-}
+    @Override
+    public LivraisonDTO modifierStatutLivraison(long idLivraison, Livraison.StatutLivraison statut){
+        Livraison livraison = livraisonRepository.findById(idLivraison).orElseThrow(() ->new RuntimeException("Livraison introuvable"));
+        livraison.setStatut(statut);
+        Livraison liv = livraisonRepository.save(livraison);
+        return livraisonMapper.toDTO(liv);
+    }
 
-//public Page<LivraisonDTO> livraisonsChauffeur(Long id,Pageable pageable){
-//
-//    Utilisateur user = userrepo.findById(id).orElseThrow(()->new RuntimeException("ve ne puvez pas consultez"));
-//    if(user.getRole() == Utilisateur.Role.CHAUFFEUR){
-//        Page<Livraison> livraisonsPage = livraisonRepository.findLivraisonsByChauffeur_Id(id,pageable);
-//        return livraisonsPage.map(livraisonMapper::toDTO);
-//    }
-//return null;
-//}
+    @Override
+    public Page<LivraisonDTO> getLivraisonsParChauffeur(Long chauffeurId, Pageable pageable) {
+        Page<Livraison> livraisonsPage = livraisonRepository.findLivraisonsByChauffeur_Id(chauffeurId, pageable);
+        return livraisonsPage.map(livraisonMapper::toDTO);
+    }
 }

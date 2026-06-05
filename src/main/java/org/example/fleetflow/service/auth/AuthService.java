@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.fleetflow.DTO.auth.AuthRequest;
 import org.example.fleetflow.DTO.auth.RegisterRequest;
 import org.example.fleetflow.Repository.UtilisateurRepository;
+import org.example.fleetflow.model.Chauffeur;
 import org.example.fleetflow.model.Utilisateur;
 import org.example.fleetflow.security.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,7 +22,18 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public String register(RegisterRequest request) {
-        Utilisateur user = new Utilisateur();
+        Utilisateur user;
+        if (request.getRole() == Utilisateur.Role.CHAUFFEUR) {
+            Chauffeur chauffeur = new Chauffeur();
+            chauffeur.setNom(request.getNom());
+            chauffeur.setTelephone(request.getTelephone());
+            chauffeur.setPermisType(request.getPermisType());
+            chauffeur.setDisponible(true); // Default to available
+            user = chauffeur;
+        } else {
+            user = new Utilisateur();
+        }
+        
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
         user.setRole(request.getRole());

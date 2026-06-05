@@ -12,5 +12,5 @@ public interface LivraisonService {
     LivraisonDTO assignerChauffeurVehicule(long idLivraison, long idChauffeur, long idVehicule);
     Page<LivraisonDTO> listLivraisons(Pageable pageable);
     LivraisonDTO modifierStatutLivraison(long idLivraison, Livraison.StatutLivraison statut);
-
+    Page<LivraisonDTO> getLivraisonsParChauffeur(Long chauffeurId, Pageable pageable);
 }

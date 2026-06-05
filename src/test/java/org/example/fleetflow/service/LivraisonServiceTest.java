@@ -135,4 +135,21 @@ class LivraisonServiceTest {
 
         assertEquals(Livraison.StatutLivraison.LIVREE, dto.getStatut());
     }
+
+    @Test
+    void getLivraisonsParChauffeur() {
+        Long chauffeurId = 1L;
+        org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(0, 10);
+        Livraison livraison = new Livraison();
+        livraison.setId(1L);
+        org.springframework.data.domain.Page<Livraison> page = new org.springframework.data.domain.PageImpl<>(java.util.List.of(livraison));
+
+        when(livraisonRepository.findLivraisonsByChauffeur_Id(chauffeurId, pageable)).thenReturn(page);
+        when(livraisonMapper.toDTO(any(Livraison.class))).thenReturn(new LivraisonDTO());
+
+        org.springframework.data.domain.Page<LivraisonDTO> result = livraisonService.getLivraisonsParChauffeur(chauffeurId, pageable);
+
+        assertNotNull(result);
+        assertEquals(1, result.getContent().size());
+    }
 }

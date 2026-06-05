@@ -18,9 +18,6 @@ public class CustomUserDetailsService implements UserDetailsService{
         if(user == null){
             throw new UsernameNotFoundException("utilisateur introuvable");
         }
-        return User.withUsername(user.getEmail())
-                .password(user.getPassword())
-                .roles(user.getRole().name())
-                .build();
+        return user;
     }
 }
