@@ -23,8 +23,6 @@ public class Vehicule {
    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private StatutVehicule statut= StatutVehicule.DISPONIBLE;
-//   @OneToOne(mappedBy = "vehicule")
-//    private Livraison livraison;
    public enum TypeVehicule{
        CAMION,FOURGON,CAMIONETTE
    }

@@ -25,3 +25,15 @@ http://localhost:8080/swagger-ui/index.html
 
 
 fleetflow part 5
+
+
+
+{
+"username": "youssef_dev",
+"email": "youssef@fleet.com",
+"password": "123",
+"role": "CHAUFFEUR",
+"nom": "Youssef El Amrani",
+"telephone": "0611223344",
+"permisType": "C"
+}

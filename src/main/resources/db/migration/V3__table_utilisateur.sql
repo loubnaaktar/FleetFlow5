@@ -6,16 +6,12 @@ CREATE TABLE IF NOT EXISTS utilisateur (
     email VARCHAR(150) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     role ENUM('ADMIN','MANAGER','CHAUFFEUR')
-    );
-
-ALTER TABLE chauffeur
-    ADD COLUMN utilisateur_id BIGINT;
+);
 
 ALTER TABLE chauffeur
     ADD CONSTRAINT fk_chauffeur_utilisateur
-        FOREIGN KEY (utilisateur_id) REFERENCES utilisateur(id)
+        FOREIGN KEY (id) REFERENCES utilisateur(id)
             ON DELETE CASCADE;
-
 
 ALTER TABLE livraison
     ADD CONSTRAINT fk_chauffeur

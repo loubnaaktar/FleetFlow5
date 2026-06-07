@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.fleetflow.DTO.ChauffeurDTO;
 import org.example.fleetflow.DTO.LivraisonDTO;
+import org.example.fleetflow.Repository.UtilisateurRepository;
 import org.example.fleetflow.model.Livraison;
 import org.example.fleetflow.model.Utilisateur;
 import org.example.fleetflow.service.implementations.ChauffeurServiceImpl;
@@ -26,6 +27,8 @@ import java.util.List;
 public class ChauffeurController {
     private final ChauffeurServiceImpl chauffeurService;
     private final LivraisonServiceImpl service;
+    private final UtilisateurRepository utilisateurRepository;
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public Page<ChauffeurDTO> listChauffeuresDispo(@PageableDefault(sort = "nom",
@@ -51,15 +54,11 @@ public class ChauffeurController {
         return chauffeurService.modifierChauffeur(id, chauffeurDTO);
     }
 
-//    @PreAuthorize("hasRole('CHAUFFEUR')")
-//    @GetMapping("/my-livraisons")
-//    public Page<LivraisonDTO> getMyLivraisons(Long id , Pageable pageable) {
-//        return service.livraisonsChauffeur(id,pageable);
-//    }
-
     @PreAuthorize("hasRole('CHAUFFEUR')")
-  @GetMapping("/my-livraisons")
-    public Page<LivraisonDTO> getLivraisonsChauffeur(Long id,Pageable pageable){
-        return chauffeurService.livraisonsChauffeur(id,pageable);
+    @GetMapping("/mes-livraisons")
+    public Page<LivraisonDTO> getLivraisonsChauffeur(Authentication authentication, Pageable pageable){
+        String email = authentication.getName();
+        Utilisateur user = utilisateurRepository.findByEmail(email);
+        return chauffeurService.livraisonsChauffeur(user.getId(), pageable);
     }
 }

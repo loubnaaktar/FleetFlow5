@@ -28,7 +28,7 @@ public class AuthService {
             chauffeur.setNom(request.getNom());
             chauffeur.setTelephone(request.getTelephone());
             chauffeur.setPermisType(request.getPermisType());
-            chauffeur.setDisponible(true); // Default to available
+            chauffeur.setDisponible(true);
             user = chauffeur;
         } else {
             user = new Utilisateur();

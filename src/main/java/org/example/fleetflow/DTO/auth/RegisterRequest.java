@@ -22,7 +22,6 @@ public class RegisterRequest {
 
     private Utilisateur.Role role;
 
-    // Chauffeur specific fields
     private String nom;
     private String telephone;
     private String permisType;
