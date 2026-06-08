@@ -9,7 +9,6 @@ import org.example.fleetflow.service.interfaces.VehiculeService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
-import tools.jackson.databind.cfg.MapperBuilder;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +18,6 @@ import java.util.stream.Collectors;
 public class VehiculeServiceImpl implements VehiculeService {
     private final VehiculeRepository vehiculeRepository;
     private final VehiculeMapper vehiculeMapper;
-    private final MapperBuilder mapperBuilder;
 
     @Override
     public VehiculeDTO createVehicule(VehiculeDTO dto) {

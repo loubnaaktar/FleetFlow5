@@ -13,6 +13,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,32 +25,25 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class ChauffeurServiceTest {
 
-@Mock
+    @Mock
     ChauffeurRepository chauffeurRepository;
-@Mock
+    @Mock
     ChauffeurMapper chauffeurMapper;
-@InjectMocks
-ChauffeurServiceImpl chauffeurService;
-@BeforeEach
-void initialisation(){
-    Chauffeur chauffeur1 = new Chauffeur();
-    Chauffeur chauffeur2 = new Chauffeur();
-    Chauffeur chauffeur3 = new Chauffeur();
-    Chauffeur chauffeur4 = new Chauffeur();
-    List<Chauffeur> chauffeurs = List.of(chauffeur1,chauffeur2,chauffeur3,chauffeur4);
-List<ChauffeurDTO> chauffeurDTOS = List.of(
-   new ChauffeurDTO(),
-   new ChauffeurDTO(),
-   new ChauffeurDTO(),
-   new ChauffeurDTO()
-        );
-Mockito.when(chauffeurRepository.findByDisponible(true)).thenReturn(chauffeurs);
-    Mockito.when(chauffeurMapper.toDTO(chauffeurs)).thenReturn(chauffeurDTOS);
-}
+    @InjectMocks
+    ChauffeurServiceImpl chauffeurService;
+
     @Test
     void cheuffeursDisponibles() {
-       List<ChauffeurDTO> chauffeurDTOList = chauffeurService.cheuffeursDisponibles();
-       assertEquals(4,chauffeurDTOList.size());
+        Chauffeur chauffeur1 = new Chauffeur();
+        List<Chauffeur> chauffeurs = List.of(chauffeur1);
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Chauffeur> chauffeurPage = new PageImpl<>(chauffeurs, pageable, 1);
+
+        Mockito.when(chauffeurRepository.findByDisponible(true, pageable)).thenReturn(chauffeurPage);
+        Mockito.when(chauffeurMapper.toDTO(chauffeur1)).thenReturn(new ChauffeurDTO());
+
+        Page<ChauffeurDTO> result = chauffeurService.cheuffeursDisponibles(pageable);
+        assertEquals(1, result.getTotalElements());
     }
 
 }

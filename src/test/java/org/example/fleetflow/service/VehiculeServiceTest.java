@@ -12,6 +12,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,24 +49,32 @@ class VehiculeServiceTest {
 
     @Test
     void getVehiculesDisponible(){
-        when(vehiculeRepository.findByStatut(Vehicule.StatutVehicule.DISPONIBLE))
-                .thenReturn(List.of(vehicule));
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Vehicule> page = new PageImpl<>(List.of(vehicule), pageable, 1);
+        
+        when(vehiculeRepository.findByStatut(Vehicule.StatutVehicule.DISPONIBLE, pageable))
+                .thenReturn(page);
         when(vehiculeMapper.toDto(vehicule)).thenReturn(vehiculeDTO);
-        List<VehiculeDTO> result = vehiculeService.getVehiculesDisponible();
-        assertEquals(1,result.size());
-        verify(vehiculeRepository).findByStatut(Vehicule.StatutVehicule.DISPONIBLE);
+        
+        Page<VehiculeDTO> result = vehiculeService.getVehiculesDisponible(pageable);
+        assertEquals(1, result.getTotalElements());
+        verify(vehiculeRepository).findByStatut(Vehicule.StatutVehicule.DISPONIBLE, pageable);
     }
 
 
     @Test
     void returVehiculeAvecCapacite(){
-        when(vehiculeRepository.findByCapaciteGreaterThan(6))
-                .thenReturn(List.of(vehicule));
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Vehicule> page = new PageImpl<>(List.of(vehicule), pageable, 1);
+        
+        when(vehiculeRepository.findByCapaciteGreaterThan(6, pageable))
+                .thenReturn(page);
         when(vehiculeMapper.toDto(vehicule)).thenReturn(vehiculeDTO);
-        List<VehiculeDTO> res =vehiculeService.getVehiculeByCapacite(6);
+        
+        Page<VehiculeDTO> res = vehiculeService.getVehiculeByCapacite(6, pageable);
         assertFalse(res.isEmpty());
-        assertEquals(1,res.size());
-        verify(vehiculeRepository).findByCapaciteGreaterThan(6);
+        assertEquals(1, res.getTotalElements());
+        verify(vehiculeRepository).findByCapaciteGreaterThan(6, pageable);
 
     }
 
